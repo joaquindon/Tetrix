@@ -82,7 +82,15 @@ g++ -std=c++17 Teatrix_sfml.cpp -o tetrix -lsfml-graphics -lsfml-window -lsfml-s
 
 ---
 
+## Referencias
+- Game Dev Experiments. (2024, 27 de abril). Tilemap, Level Editor, and Organizing - SFML Game Tutorial C++ - Episode 3 [Video]. YouTube. https://www.youtube.com/watch?v=DF5i6bZ3Rns&list=PL4Jmh1jbMCDlJppGdSimknQ5YnP1DX_zK&index=3
+
+- CodeVault. (2025, 25 de febrero). C++ SFML 3 | Simple Button [Video]. YouTube. https://www.youtube.com/watch?v=s2g0mPxZnvM
+
+- SFML Team. (s.f.). sf::Vector2< T > Class Template Reference. SFML. Recuperado entre 2024 y 2025 de https://www.sfml-dev.org/documentation/3.0.0/classsf_1_1Vector2.html
+
+- SFML Team. (s.f.). Class Index. SFML. Recuperado entre 2024 y 2025 de https://www.sfml-dev.org/documentation/3.0.0/annotated.html
+
 <div align="center">
   <img src="https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif" width="300"/>
-  <p>¡Diviértete programando y jugando!</p>
 </div>
