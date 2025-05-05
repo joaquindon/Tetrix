@@ -1,0 +1,55 @@
+# === Directorios de compilación y binarios ===
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/  # Para CMake
+CMakeFiles/
+*.dir/  # Directorios generados por algunos IDEs
+
+# === Archivos ejecutables y librerías ===
+*.exe
+*.dll
+*.so
+*.a
+*.lib
+*.exp
+
+# === Archivos de depuración y símbolos ===
+*.pdb
+*.ilk
+*.idb
+*.iobj
+*.ipdb
+
+# === Visual Studio (incluye .vs y cachés) ===
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.suo
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+ipch/  # Cachés de IntelliSense (compatible con versiones antiguas de VS)
+*.ipch  # Alternativa moderna para cachés
+
+# === Archivos temporales y de sistema ===
+*.cache
+*.log
+*.tmp
+*.userprefs
+.DS_Store
+Thumbs.db
+
+# === CMake ===
+CMakeCache.txt
+CMakeSettings.json
+Makefile
+
+# === SFML (redundante, ya cubierto por *.dll/.a) ===
+# (Las entradas específicas ya están arriba)
