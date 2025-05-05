@@ -86,5 +86,3 @@ g++ -std=c++17 Teatrix_sfml.cpp -o tetrix -lsfml-graphics -lsfml-window -lsfml-s
   <img src="https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif" width="300"/>
   <p>¡Diviértete programando y jugando!</p>
 </div>
-
-¿Necesitas que agregue o modifique alguna sección específica del README? Estoy aquí para ayudarte a personalizarlo según tus necesidades.
