@@ -49,7 +49,7 @@ Thumbs.db
 # === CMake ===
 CMakeCache.txt
 CMakeSettings.json
-Makefile
+
 
 # === SFML (redundante, ya cubierto por *.dll/.a) ===
 # (Las entradas específicas ya están arriba)
