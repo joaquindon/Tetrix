@@ -14,13 +14,3 @@ public:
 	void DerotatePart(int ind);
 };
 
-#pragma once
-#include <vector>
-
-class Tablero
-{
-private:
-	std::vector<unsigned char> tabla;
-public:
-
-}

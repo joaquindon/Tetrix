@@ -1,35 +1,38 @@
-// Teatrix_sfml.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
-//
-
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <optional>
+#include "Tablero.hpp"
 
 int main()
 {
+    // Constantes del juego
+    const unsigned char COLS = 10;
+    const unsigned char ROWS = 20;
+    const unsigned int CELL_SIZE = 20;
+    const float INITIAL_DELAY = 0.5f;
 
-    const unsigned char cols = 10;
-    const unsigned char rows = 20;
-    const unsigned int celdas = 20;
-    const unsigned char pantalla = 1;
-    std::array<Punto, 4> pieza = { {
-    {4, 0},
-    {4, 1},
-    {4, 2},
-    {4, 3}
-    } };
-
-    float timer = 0.0f;
-    float delay = 0.5f;
-
-
-    sf::RenderWindow window(sf::VideoMode({cols * celdas, rows * celdas}), "Tetrix");
+    // Inicialización de la ventana
+    sf::RenderWindow window(sf::VideoMode({COLS * CELL_SIZE, ROWS * CELL_SIZE}), "Tetris SFML");
     window.setFramerateLimit(60);
 
-    std::vector<std::vector<unsigned char>> matrix(cols, std::vector<unsigned char>(rows));
+    // Matriz del juego (columnas x filas)
+    std::vector<std::vector<unsigned char>> matrix(ROWS, std::vector<unsigned char>(COLS, 0));
+    
+    // Reloj para controlar la caída automática
+    sf::Clock clock;
+    float timer = 0;
+    float delay = INITIAL_DELAY;
+
+    // Crear e inicializar el tablero con una pieza aleatoria
+    Tablero tablero('I'); // Comienza con la pieza I
+
     while (window.isOpen())
     {
+        // Manejo del tiempo para la caída automática
+        float time = clock.restart().asSeconds();
+        timer += time;
 
+        // Procesamiento de eventos
         while (const std::optional<sf::Event> event = window.pollEvent())
         {
             if (event->is<sf::Event::Closed>())
@@ -37,49 +40,75 @@ int main()
                 window.close();
             }
 
-            else if (event->is<sf::Event::MouseButtonPressed>())
+            // Controles del teclado
+            if (const auto* keyEvent = event->getIf<sf::Event::KeyPressed>())
             {
-                const auto* mouseEvent = event->getIf<sf::Event::MouseButtonPressed>();
-                if (mouseEvent->button == sf::Mouse::Button::Left)
+                switch (keyEvent->key)
                 {
-                    int x = mouseEvent->position.x / celdas / pantalla;
-                    int y = mouseEvent->position.y / celdas / pantalla;
-
-                    if (x >= 0 && x < cols && y >= 0 && y < rows)
-                        matrix[x][y] = 1 - matrix[x][y];
+                    case sf::Keyboard::Left:
+                        // Mover izquierda (nos falta lógica)
+                        break;
+                    case sf::Keyboard::Right:
+                        // Mover derecha (nos falta lógica)
+                        break;
+                    case sf::Keyboard::Down:
+                        // Acelerar caída
+                        delay = 0.05f;
+                        break;
+                    case sf::Keyboard::Up:
+                        // Rotar pieza (nos falta lógica)
+                        break;
+                    case sf::Keyboard::Space:
+                        // Caída instantánea (nos falta lógica)
+                        break;
+                    default:
+                        break;
                 }
             }
-
-
         }
 
+        // Lógica de caída automática
+        if (timer > delay)
+        {
+            timer = 0;
+            if (!tablero.caida(matrix))
+            {
+                // La pieza no pudo caer más, actualizar matriz
+                tablero.actualizarMatriz(matrix);
+                // Crear nueva pieza
+                char shapes[] = {'I', 'J', 'L', 'O', 'S', 'T', 'Z'};
+                tablero.reset(shapes[rand() % 7]);
+            }
+            delay = INITIAL_DELAY; // Resetear delay después de acelerar
+        }
 
+        // Dibujado
         window.clear(sf::Color(40, 40, 40));
         
-        sf::RectangleShape cuadros(sf::Vector2f(celdas - 1, celdas - 1));
+        // Dibujar la cuadrícula
+        sf::RectangleShape cell(sf::Vector2f(CELL_SIZE - 1, CELL_SIZE - 1));
 
-        cuadros.setFillColor(sf::Color(10, 10, 10));
-
-        for (unsigned char i = 0; i < cols; i++)
+        // Dibujar la matriz
+        for (unsigned char row = 0; row < ROWS; row++)
         {
-            for (unsigned char j = 0; j < rows; j++)
+            for (unsigned char col = 0; col < COLS; col++)
             {
-                cuadros.setPosition({ static_cast<float>(celdas * i), static_cast<float>(celdas * j) });
+                cell.setPosition(static_cast<float>(CELL_SIZE * col), 
+                                static_cast<float>(CELL_SIZE * row));
 
-                if (matrix[i][j])
-                    cuadros.setFillColor(sf::Color(255,0,0));
+                if (matrix[row][col])
+                    cell.setFillColor(sf::Color(255, 0, 0)); // Rojo para bloques fijos
                 else
-                    cuadros.setFillColor(sf::Color(10, 10, 10));
+                    cell.setFillColor(sf::Color(10, 10, 10)); // Gris para espacio vacío
 
-                window.draw(cuadros);
+                window.draw(cell);
             }
         }
-
         window.display();
     }
+
+    return 0;
 }
-
-
 // Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar
 // Depurar programa: F5 o menú Depurar > Iniciar depuración
 
