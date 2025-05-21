@@ -1,70 +1,70 @@
-; check_collision.asm
-; int check_collision(unsigned char* forma, int x, int y, unsigned char* tablero, int ancho)
-
-global check_collision
-
 section .text
+global collision
 
-check_collision:
+; bool collision(Position* tabla, int size, unsigned char* matriz, int ancho, int alto)
+; argumentos:
+; rdi = tabla (Position*)
+; rsi = size (int)
+; rdx = matriz (unsigned char*)
+; rcx = ancho (int)
+; r8  = alto (int)
+
+collision:
     push rbx
     push r9
     push r10
     push r11
 
-    xor rax, rax        ; rax = valor de retorno, por defecto 0 (sin colisión)
+    mov rbx, 0           ; índice i = 0
 
-    xor r9, r9          ; i = fila (0..3)
-.row_loop:
-    xor r10, r10        ; j = columna (0..3)
-.col_loop:
-    ; offset = i * 4 + j
-    mov r11, r9
-    shl r11, 2          ; r11 = i * 4
-    add r11, r10        ; r11 = i*4 + j
+.check_loop:
+    cmp rbx, rsi         ; si i >= size
+    jge .can_fall
 
-    movzx bl, byte [rdi + r11] ; bl = forma[i][j]
-    cmp bl, 0
-    je .next_col        ; si no hay bloque, ignorar
+    ; cargar x e y de tabla[i]
+    mov eax, dword [rdi + rbx*8]       ; x = tabla[i].x
+    mov edx, dword [rdi + rbx*8 + 4]   ; y = tabla[i].y
 
-    ; calcular coordenadas en el tablero: tx = x + j, ty = y + i
-    mov eax, esi        ; r11d = x (movemos el valor de x a eax para la suma)
-    add eax, r10        ; eax = x + j
+    ; verificar límite inferior (y+1 >= alto)
+    mov edi, edx
+    inc edi
+    cmp edi, r8d
+    jae .collision       ; colisión si fuera del borde
 
-    mov ebx, edx        ; rbx = y
-    add ebx, r9         ; ebx = y + i
+    ; calcular offset matriz: (y+1)*ancho + x
+    mov esi, edi         ; y+1
+    imul esi, ecx        ; * ancho
+    add esi, eax         ; + x
 
-    ; verificar bordes: si x+j < 0 o >= ancho, colisión
-    cmp eax, 0
-    jl .colision
+    mov al, [rdx + rsi]  ; cargar matriz[offset]
+    cmp al, 0
+    jne .collision       ; colisión si != 0
 
-    cmp eax, r8d        ; r8d es el ancho, lo usamos aquí
-    jge .colision
+    inc rbx
+    jmp .check_loop
 
-    ; offset tablero = (y + i) * ancho + (x + j)
-    imul ebx, r8d       ; (y+i) * ancho
-    add ebx, eax        ; + (x+j)
+.collision:
+    mov al, 1
+    jmp .end
 
-    ; verificar si ese lugar del tablero está ocupado
-    cmp byte [rcx + rbx], 0
-    jne .colision
+.can_fall:
+    mov rbx, 0
 
-.next_col:
-    inc r10
-    cmp r10, 4
-    jl .col_loop
+.inc_loop:
+    cmp rbx, rsi
+    jge .ret_zero
 
-    inc r9
-    cmp r9, 4
-    jl .row_loop
+    mov eax, dword [rdi + rbx*8 + 4]
+    inc eax
+    mov dword [rdi + rbx*8 + 4], eax
 
-    ; sin colisión
-    xor rax, rax
-    jmp .done
+    inc rbx
+    jmp .inc_loop
 
-.colision:
-    mov rax, 1          ; hay colisión
+.ret_zero:
+    mov al, 0
 
-.done:
+.end:
     pop r11
     pop r10
     pop r9
