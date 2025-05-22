@@ -8,6 +8,7 @@ x86/
 build/  # Para CMake
 CMakeFiles/
 *.dir/  # Directorios generados por algunos IDEs
+Not_Useful/
 
 # === Archivos ejecutables y librerías ===
 *.exe
