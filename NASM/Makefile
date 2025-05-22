@@ -1,32 +1,43 @@
 CXX = g++
 NASM = nasm
 
-CXXFLAGS = -c -Wall -Wextra
-NASMFLAGS = -f elf64
+CXXFLAGS = -m32 -c -Wall -Wextra -g
+NASMFLAGS = -f elf32 -g
 
-TARGET = test
+SRC_DIR = src
+OBJ_DIR = obj
+BIN_DIR = bin
 
-CPP_SRCS = test.cpp
-ASM_SRCS = movement.asm collision.asm
+TARGET = $(BIN_DIR)/test
 
-CPP_OBJS = $(CPP_SRCS:.cpp=.o)
-ASM_OBJS = $(ASM_SRCS:.asm=.o)
+CPP_SRCS = $(wildcard $(SRC_DIR)/*.cpp)
+ASM_SRCS = $(wildcard $(SRC_DIR)/*.asm)
+
+CPP_OBJS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(CPP_SRCS))
+ASM_OBJS = $(patsubst $(SRC_DIR)/%.asm,$(OBJ_DIR)/%.o,$(ASM_SRCS))
+
+OBJS = $(CPP_OBJS) $(ASM_OBJS)
 
 .PHONY: all clean run
 
 all: $(TARGET)
 
-$(TARGET): $(CPP_OBJS) $(ASM_OBJS)
-	$(CXX) $^ -o $@ -no-pie
+$(TARGET): $(OBJS)
+	@mkdir -p $(BIN_DIR)
+	$(CXX) -m32 $^ -o $@
 
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) $< -o $@
+# Regla para archivos .cpp
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) -o $@ $<
 
-%.o: %.asm
-	$(NASM) $(NASMFLAGS) $< -o $@
+# Regla para archivos .asm
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.asm
+	@mkdir -p $(OBJ_DIR)
+	$(NASM) $(NASMFLAGS) -o $@ $<
 
 clean:
-	rm -f $(CPP_OBJS) $(ASM_OBJS) $(TARGET)
+	rm -rf $(OBJ_DIR) $(BIN_DIR)
 
 run: all
 	./$(TARGET)
