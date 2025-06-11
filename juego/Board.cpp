@@ -1,12 +1,12 @@
 #include "Board.hpp"
 
-void Board::draw(sf::RenderTarget &rt, sf::RenderStates rs) const
+void Board::draw(sf::RenderTarget &target, sf::RenderStates state) const
 {
     for(int i = 0; i < 20; i++)
     {
         for(int j = 0; j < 10; j++)
         {
-            rt.draw(boardShapes[i][j], rs);
+            target.draw(boardShapes[i][j], state);
         }
     }
 }
@@ -19,7 +19,7 @@ Board::Board()
         for(int j=0; j < 10; j++)
         {
             boardShapes[i][j]=sf::RectangleShape (sf::Vector2f(20,20));
-            boardShapes[i][j].setPosition(j*20,1*20);
+            boardShapes[i][j].setPosition(j*20,i*20);
             boardShapes[i][j].setFillColor (sf::Color(50,50,50));
             boardShapes[i][j].setOutlineThickness(2);
             boardShapes[i][j].setOutlineColor (sf::Color(0,0,0));

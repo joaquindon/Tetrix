@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "Board.hpp"
 
 using namespace std;
 using namespace sf;
@@ -7,6 +8,7 @@ using namespace sf;
 
 int main()
 {
+    Board tablero;
     RenderWindow window (VideoMode (400,400), "Teatrix");
     window.setFramerateLimit(60);
     while(window.isOpen() ) {
@@ -18,7 +20,9 @@ int main()
                 window.close();
             }
         }
+        tablero.UpdateBoardColors();
         window.clear(Color(20,20,20));
+        window.draw(tablero);
         window.display();
     }
     return 0;
