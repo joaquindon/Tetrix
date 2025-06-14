@@ -9,7 +9,7 @@ using namespace sf;
 int main()
 {
     Board tablero;
-    RenderWindow window (VideoMode (400,400), "Teatrix");
+    RenderWindow window (VideoMode (200,400), "Teatrix");
     window.setFramerateLimit(60);
     while(window.isOpen() ) {
         Event event;
