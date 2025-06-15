@@ -8,6 +8,7 @@ class Parts
     public:
         Parts();
         std::vector<std::vector<bool>> ConsultPart(int ind);
-        void rotateParts();
-        void deRotateParts();
+        void rotateParts(int ind);
+        void deRotateParts(int ind);
+        
 };

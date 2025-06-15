@@ -62,3 +62,10 @@ void Board::UpdateBoardColors()
 		}
 	}
 }
+
+bool Board::InstallParts()
+{
+    srand(time(NULL));
+    this->indNewPart = rand() % 7;
+    std::vector<std::vector<bool
+}
