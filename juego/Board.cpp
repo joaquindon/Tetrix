@@ -58,6 +58,9 @@ void Board::UpdateBoardColors()
 				case 7: 
                     boardShapes[i][j].setFillColor(sf::Color(138,194,247));
                     break;
+                default:
+                    boardShapes[i][j].setFillColor(newPartColor);
+                    break;
 			}
 		}
 	}
@@ -67,5 +70,55 @@ bool Board::InstallParts()
 {
     srand(time(NULL));
     this->indNewPart = rand() % 7;
-    std::vector<std::vector<bool
+    std::vector<std::vector<bool>> part = this->parts.ConsultPart(this->indNewPart);
+    
+    int size = (int) part.size();
+
+    indX = 5 - (size/2);
+    indY = 0;
+
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            if (part[i][j])
+            {
+                if (board[i][j + indX] > 0)
+                {
+                    return false;
+                }
+                board[i][j + indX] = -1;
+                
+            }   
+        }
+    }
+    
+    int color = 1 + (rand() % 7);
+    indColorNewPart = color;
+
+    switch (color)
+    {
+        case 1: 
+            newPartColor = sf::Color(255,166,0);
+            break;
+        case 2: 
+            newPartColor = sf::Color(245,152,245);
+            break;
+        case 3: 
+            newPartColor = sf::Color(51,204,153);
+            break;
+        case 4:
+            newPartColor = sf::Color(255,110,110);
+            break;
+        case 5: 
+            newPartColor = sf::Color(255,204,77);
+            break;
+        case 6: 
+            newPartColor = sf::Color(166,166,255);
+            break;
+        case 7: 
+            newPartColor = sf::Color(138,194,247);
+            break;
+    }
+    return true;
 }

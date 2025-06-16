@@ -11,6 +11,9 @@ int main()
     Board tablero;
     RenderWindow window (VideoMode (200,400), "Teatrix");
     window.setFramerateLimit(60);
+
+    tablero.InstallParts();
+
     while(window.isOpen() ) {
         Event event;
         while(window.pollEvent (event)) 
@@ -20,6 +23,7 @@ int main()
                 window.close();
             }
         }
+
         tablero.UpdateBoardColors();
         window.clear(Color(20,20,20));
         window.draw(tablero);

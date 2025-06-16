@@ -7,16 +7,21 @@
 class Board: public sf::Drawable 
 {
     private:
+        int timer = 0;
+        int indX, indY;
         int board [20][10];
-        sf::RectangleShape boardShapes [20][10];
+        int timerLimit = 30;
+        int indNewPart, indColorNewPart;
 
         Parts parts;
-
         sf::Color newPartColor;
-        int indNewPart, indColorNewPart;
+        sf::RectangleShape boardShapes [20][10];
+
+        
     public:
         Board();
         bool InstallParts();
+        bool UpdateBoard();
         void UpdateBoardColors();
         void draw(sf::RenderTarget&, sf::RenderStates) const;
 };
