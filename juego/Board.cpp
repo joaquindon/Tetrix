@@ -16,6 +16,61 @@ void Board::UpdateTimerLimit(int velocidad)
     this->timerLimit = velocidad;
 }
 
+void Board::Right(){
+	int aux = 0;
+	for(int i = 0; i < 20; i++)
+    {
+		for(int j = 0; j < 9; j++)
+        {
+			if(board[i][j]==-1 &&
+                board[i][j+1]<=0)
+            {	
+				aux++;	
+			}
+		}
+	}
+	
+	if(aux == 4)
+    {
+		indX++;
+		for(int i = 0; i < 20; i++)
+        {
+			for(int j = 9; j >= 0; j--)
+            {
+				if(board[i][j] == -1)
+                {
+                   board[i][j] = 0, board[i][j + 1] = -1;  
+                }
+			}
+		}
+	}
+}
+
+void Board::Left(){
+	int aux = 0;
+	for(int i = 0; i < 20; i++)
+    {
+		for(int j = 1; j < 10; j++)
+        {
+			if(board[i][j] == -1 &&
+                board[i][j - 1] <= 0)
+            {
+				aux++;
+			}
+		}
+	}
+	
+	if(aux==4){
+		indX--;
+		for(int i = 0; i < 20; i++){
+			for(int j = 0; j < 10; j++){
+				if(board[i][j]==-1) board[i][j]=0,board[i][j-1]=-1; 
+			}
+		}
+	}
+}
+
+
 Board::Board() 
 {
     memset(board, 0, sizeof(board));
