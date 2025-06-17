@@ -23,7 +23,11 @@ int main()
                 window.close();
             }
         }
-
+        if(tablero.UpdateBoard())
+        {
+            tablero.InstallParts();
+        }
+        
         tablero.UpdateBoardColors();
         window.clear(Color(20,20,20));
         window.draw(tablero);
