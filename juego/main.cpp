@@ -23,9 +23,25 @@ int main()
                 window.close();
             }
         }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        {
+            tablero.UpdateTimerLimit(10);
+        }
+        else
+        {
+            tablero.UpdateTimerLimit(30);
+        }
+        
+
         if(tablero.UpdateBoard())
         {
-            tablero.InstallParts();
+            if(!tablero.InstallParts())
+            {         
+                std::cout<< "Game over" << std::endl;
+                window.close();   
+            }
+
         }
         
         tablero.UpdateBoardColors();

@@ -23,5 +23,6 @@ class Board: public sf::Drawable
         bool InstallParts();
         bool UpdateBoard();
         void UpdateBoardColors();
+        void UpdateTimerLimit(int velocidad);
         void draw(sf::RenderTarget&, sf::RenderStates) const;
 };

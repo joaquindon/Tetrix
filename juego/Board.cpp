@@ -11,6 +11,11 @@ void Board::draw(sf::RenderTarget &target, sf::RenderStates state) const
     }
 }
 
+void Board::UpdateTimerLimit(int velocidad)
+{
+    this->timerLimit = velocidad;
+}
+
 Board::Board() 
 {
     memset(board, 0, sizeof(board));
