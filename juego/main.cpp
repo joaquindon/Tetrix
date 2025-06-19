@@ -14,6 +14,9 @@ int main()
 
     tablero.InstallParts();
 
+    int right = 0;
+    int left = 0;
+    
     while(window.isOpen() ) {
         Event event;
         while(window.pollEvent (event)) 
@@ -33,7 +36,12 @@ int main()
             tablero.UpdateTimerLimit(30);
         }
         
-
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) &&
+            right == 0)
+        {
+            /* code */
+        }
+        
         if(tablero.UpdateBoard())
         {
             if(!tablero.InstallParts())
