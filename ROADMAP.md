@@ -126,6 +126,12 @@ Ambos integrantes contribuyeron de forma equitativa y conjunta en todas las fase
 
 ---
 
+## Referencias
+
+- **Ditecno Digital.** (2023, 15 de octubre). 🎮 🕹 Cómo Hacer un Juego de Tetris en C++ - SFML y POO (Programación Orientada a Objetos) [Video]. YouTube. https://www.youtube.com/watch?v=KigwRJtYZiI&t=5669s
+
+---
+
 <div align="center">
 
 🔄 Documento actualizado periódicamente por  
